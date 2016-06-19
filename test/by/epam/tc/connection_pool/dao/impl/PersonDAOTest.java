@@ -1,4 +1,4 @@
-package by.epam.tc.connection_pool.dao.impl;
+п»їpackage by.epam.tc.connection_pool.dao.impl;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -53,8 +53,8 @@ public class PersonDAOTest {
 		boolean resultContion = false;
 		Person newPerson = new Person();
 		newPerson.setId(18);
-		newPerson.setName("вася");
-		newPerson.setSurname("атрохов");
+		newPerson.setName("РІР°СЃСЏ");
+		newPerson.setSurname("Р°С‚СЂРѕС…РѕРІ");
 		newPerson.setEmail("atrohov@mail.ru");
 		try {
 			resultContion = personDAO.addPersonInformation(newPerson);
@@ -69,7 +69,7 @@ public class PersonDAOTest {
 	@Test
 	public void searchPersonByEmail() {
 		Date dateSql = Date.valueOf("1996-07-15");
-		Person expectedPerson = new Person("Александр", "Брановец", "Юрьевич", dateSql,
+		Person expectedPerson = new Person("РђР»РµРєСЃР°РЅРґСЂ", "Р‘СЂР°РЅРѕРІРµС†", "Р®СЂСЊРµРІРёС‡", dateSql,
 				"branovecA@gmail.com", "+375291111111");
 		
 		Person personActual = null;
@@ -87,7 +87,7 @@ public class PersonDAOTest {
 	public void searchPersonByNames() {
 		List<Person> expectedPersonList = new ArrayList<Person>();
 		Date dateSql = Date.valueOf("1996-07-15");
-		Person expectedPerson = new Person("Александр", "Брановец", "Юрьевич", dateSql,
+		Person expectedPerson = new Person("РђР»РµРєСЃР°РЅРґСЂ", "Р‘СЂР°РЅРѕРІРµС†", "Р®СЂСЊРµРІРёС‡", dateSql,
 				"branovecA@gmail.com", "+375291111111");
 		
 		expectedPersonList.add(expectedPerson);
@@ -95,7 +95,7 @@ public class PersonDAOTest {
 		List<Person> personActualPersonList = null;
 		try {
 			personActualPersonList =  personDAO
-					.searchPersonByNames("Александр", "Брановец", "Юрьевич");
+					.searchPersonByNames("РђР»РµРєСЃР°РЅРґСЂ", "Р‘СЂР°РЅРѕРІРµС†", "Р®СЂСЊРµРІРёС‡");
 		} catch (PersonDAOException e) {
 			e.printStackTrace();
 		}

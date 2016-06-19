@@ -1,4 +1,4 @@
-package by.epam.tc.connection_pool.test;
+п»їpackage by.epam.tc.connection_pool.test;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -21,7 +21,7 @@ public class TestDAO {
 
 		Date dateSql = Date.valueOf("1981-10-10");
 		Person person = null;
-		person = new Person("олег", "гринюк", "сергеевич", dateSql,
+		person = new Person("РѕР»РµРі", "РіСЂРёРЅСЋРє", "СЃРµСЂРіРµРµРІРёС‡", dateSql,
 				"olegk@mail.com", "+355291111111");
 
 		try {
