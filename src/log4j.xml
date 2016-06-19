@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<appender name="TXTFileAppender" class="org.apache.log4j.FileAppender">
+		<param name="Encoding" value="UTF-8" />
+		<param name="File" value="src/by/epam/tc/connection_pool/logs/logs.txt" />
+		<param name="Append" value="true" />
+		<layout class="org.apache.log4j.SimpleLayout" />
+	</appender>
+	<appender name="ConsoleAppender" class="org.apache.log4j.ConsoleAppender">
+		<param name="target" value="System.out" />
+		<layout class="org.apache.log4j.SimpleLayout" />
+	</appender>
+	<root>
+		<priority value="debug" />
+		<appender-ref ref="TXTFileAppender" />
+		<appender-ref ref="ConsoleAppender" />
+	</root>
+</log4j:configuration>

@@ -1,0 +1,138 @@
+
+WARN - wrong initialization poolsize
+java.lang.NumberFormatException: For input string: "5.0"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at by.epam.tc.connection_pool.dao.connection_pool.ConnectionPool.<init>(ConnectionPool.java:57)
+	at by.epam.tc.connection_pool.dao.connection_pool.ConnectionPool.<clinit>(ConnectionPool.java:47)
+	at by.epam.tc.connection_pool.test.TestDAO.main(TestDAO.java:10)
+WARN - wrong initialization poolsize
+java.lang.NumberFormatException: For input string: "5.0"
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at by.epam.tc.connection_pool.dao.connection_pool.ConnectionPool.<init>(ConnectionPool.java:57)
+	at by.epam.tc.connection_pool.test.TestDAO.main(TestDAO.java:10)
+DEBUG - Connection is got
+DEBUG - Connection is got
+DEBUG - Connection is got
+DEBUG - Connection is got
+DEBUG - Connection is got
+DEBUG - Connection is got
+ERROR - ERROR ADDING PERSON
+java.sql.SQLException: No value specified for parameter 7
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1056)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:957)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:927)
+	at com.mysql.jdbc.PreparedStatement.fillSendPacket(PreparedStatement.java:2179)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:1996)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:1940)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:1925)
+	at by.epam.tc.connection_pool.dao.impl.PersonDAO.addPerson(PersonDAO.java:81)
+	at by.epam.tc.connection_pool.test.TestDAO.main(TestDAO.java:28)
+DEBUG - Connection is got
+DEBUG - Connection is got
+DEBUG - Connection is got
+DEBUG - Connection is got
+ERROR - ERROR ADDING PERSON
+com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry '10' for key 'PRIMARY'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:406)
+	at com.mysql.jdbc.Util.getInstance(Util.java:381)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1016)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:957)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3376)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3308)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:1837)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:1961)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2543)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1737)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2022)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:1940)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:1925)
+	at by.epam.tc.connection_pool.dao.impl.PersonDAO.addPerson(PersonDAO.java:87)
+	at by.epam.tc.connection_pool.test.TestDAO.main(TestDAO.java:28)
+DEBUG - Connection is got
+DEBUG - Connection is got
+DEBUG - Connection is got
+ERROR - ERROR ADDING PERSON
+com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry '13' for key 'PRIMARY'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:406)
+	at com.mysql.jdbc.Util.getInstance(Util.java:381)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1016)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:957)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3376)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3308)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:1837)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:1961)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2543)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1737)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2022)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:1940)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:1925)
+	at by.epam.tc.connection_pool.dao.impl.PersonDAO.addPersonInformation(PersonDAO.java:112)
+	at by.epam.tc.connection_pool.test.TestDAO.main(TestDAO.java:32)
+DEBUG - Connection is got
+DEBUG - Connection is got
+DEBUG - Connection is got
+DEBUG - Connection is got
+ERROR - ERROR ADDING PERSON
+com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`hr-system`.`person`, CONSTRAINT `fk_user` FOREIGN KEY (`id_person`) REFERENCES `user` (`id_user`) ON DELETE NO ACTION ON UPDATE NO ACTION)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:406)
+	at com.mysql.jdbc.Util.getInstance(Util.java:381)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1016)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:957)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3376)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3308)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:1837)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:1961)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2543)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1737)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2022)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:1940)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:1925)
+	at by.epam.tc.connection_pool.dao.impl.PersonDAOImpl.addPersonInformation(PersonDAOImpl.java:113)
+	at by.epam.tc.connection_pool.dao.impl.PersonDAOTest.addPersonInformation(PersonDAOTest.java:53)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)
+DEBUG - Connection is got
+DEBUG - Connection is got
+DEBUG - Connection is got
+DEBUG - Connection is got
+DEBUG - Connection is got
+DEBUG - Connection is got
