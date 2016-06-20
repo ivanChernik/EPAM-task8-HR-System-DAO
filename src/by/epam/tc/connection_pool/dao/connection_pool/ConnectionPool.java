@@ -31,17 +31,11 @@ import by.epam.tc.connection_pool.util.DBParameter;
 import by.epam.tc.connection_pool.util.DBResourceManager;
 
 public final class ConnectionPool {
-	private static final String ERROR_CLOSING_RESULT_SET = "Error closing ResultSet";
-	private static final String ERROR_CLOSING_STATEMENT = "Error closing statement";
-	private static final String ERROR_GET_INSTANCE = "Error get instance";
-	private static final String ERROR_CLOSING_CONNECTION = "Error closing connection";
-	private static final String ERROR_CLEARING_CONNECTION_QUEUES = "Error clearing connection queues";
+	private static final String ERROR_CLOSING_CONNECTION_QUEUES = "Error closing connection queues";
 	private static final String ERROR_CONNECTION_TO_THE_DATA_SOURCES = "Error connection to the data sources";
-	private static final String CONNECTION_IS_GOT = "Connection is got";
-	private static final String WRONG_INITIALIZATION_POOLSIZE = "wrong initialization poolsize";
 	private static final String CONNECTION_IS_NOT_GOT = "Connection is not got";
 	private static final String DATABASE_DRIVER_CLASS_NOT_FOUND = "Database driver class not found";
-	private static final Logger log = Logger.getLogger(ConnectionPool.class);
+
 	private String driverName;
 	private String userName;
 	private String password;
@@ -52,7 +46,6 @@ public final class ConnectionPool {
 	private static ConnectionPool instance = new ConnectionPool();
 
 	private ConnectionPool() {
-		// validation??
 		DBResourceManager dbManager = new DBResourceManager();
 		driverName = dbManager.getValue(DBParameter.DB_DRIVER);
 		userName = dbManager.getValue(DBParameter.DB_USER);
@@ -62,7 +55,6 @@ public final class ConnectionPool {
 			poolSize = Integer.parseInt(dbManager
 					.getValue(DBParameter.DB_POOL_SIZE));
 		} catch (NumberFormatException e) {
-			log.warn(WRONG_INITIALIZATION_POOLSIZE, e);
 			poolSize = 5;
 		}
 	}
@@ -71,7 +63,6 @@ public final class ConnectionPool {
 		try {
 			instance.initConnectionPool();
 		} catch (ConnectionPoolException e) {
-			log.error(ERROR_GET_INSTANCE, e);
 			throw e;
 		}
 		return instance;
@@ -92,16 +83,12 @@ public final class ConnectionPool {
 			}
 
 		} catch (ClassNotFoundException e) {
-			log.error(DATABASE_DRIVER_CLASS_NOT_FOUND, e);
 			throw new ConnectionPoolException(DATABASE_DRIVER_CLASS_NOT_FOUND,
 					e);
 
 		} catch (SQLException e) {
-			log.error(CONNECTION_IS_NOT_GOT, e);
 			throw new ConnectionPoolException(CONNECTION_IS_NOT_GOT, e);
 		}
-
-		log.debug(CONNECTION_IS_GOT);
 
 	}
 
@@ -112,7 +99,6 @@ public final class ConnectionPool {
 			connection = connectionQueue.take();
 			givenAwayConQueue.add(connection);
 		} catch (InterruptedException e) {
-			log.error(ERROR_CONNECTION_TO_THE_DATA_SOURCES, e);
 			throw new ConnectionPoolException(
 					ERROR_CONNECTION_TO_THE_DATA_SOURCES, e);
 		}
@@ -120,16 +106,17 @@ public final class ConnectionPool {
 
 	}
 
-	public void dispose() {
+	public void dispose() throws ConnectionPoolException {
 		clearConnectionQueue();
 	}
 
-	private void clearConnectionQueue() {
+	private void clearConnectionQueue() throws ConnectionPoolException {
 		try {
 			closeConnectionsQueue(givenAwayConQueue);
 			closeConnectionsQueue(connectionQueue);
 		} catch (SQLException e) {
-			log.error(ERROR_CLEARING_CONNECTION_QUEUES, e);
+			throw new ConnectionPoolException(
+					ERROR_CLOSING_CONNECTION_QUEUES, e);
 		}
 	}
 
@@ -144,54 +131,6 @@ public final class ConnectionPool {
 		}
 	}
 	
-	public void closeStatement(Statement st) {
-		try {
-			st.close();
-		} catch (SQLException e) {
-			log.error(ERROR_CLOSING_STATEMENT, e);
-			// throw new ConnectionPoolException(ERROR_CLOSING_CONNECTION, e);
-		}
-	}
-
-	public void closeConnection(Connection con, Statement st, ResultSet rs) {
-		try {
-			con.close();
-		} catch (SQLException e) {
-			log.error(ERROR_CLOSING_CONNECTION, e);
-			// throw new ConnectionPoolException(ERROR_CLOSING_CONNECTION, e);
-		}
-		try {
-			rs.close();
-		} catch (SQLException e) {
-
-			log.error(ERROR_CLOSING_RESULT_SET, e);
-			// throw new ConnectionPoolException(ERROR_CLOSING_CONNECTION, e);
-		}
-
-		try {
-			st.close();
-		} catch (SQLException e) {
-			log.error(ERROR_CLOSING_STATEMENT, e);
-			// throw new ConnectionPoolException(ERROR_CLOSING_CONNECTION, e);
-		}
-	}
-
-	public void closeConnection(Connection con, Statement st) {
-		try {
-			con.close();
-		} catch (SQLException e) {
-			log.error(ERROR_CLOSING_CONNECTION, e);
-			// throw new ConnectionPoolException(ERROR_CLOSING_CONNECTION, e);
-		}
-
-		try {
-			st.close();
-		} catch (SQLException e) {
-			log.error(ERROR_CLOSING_STATEMENT, e);
-			// throw new ConnectionPoolException(ERROR_CLOSING_CONNECTION, e);
-
-		}
-	}
 
 	private class PooledConnection implements Connection {
 		private static final String ERROR_ALLOCATING_CONNECTION_IN_THE_POOL = "Error allocating connection in the pool";
@@ -231,7 +170,6 @@ public final class ConnectionPool {
 		@Override
 		public void close() throws SQLException {
 			if (connection.isClosed()) {
-				log.error(ATTEMPTING_TO_CLOSE_CLOSED_CONNECTION);
 				throw new SQLDataException(
 						ATTEMPTING_TO_CLOSE_CLOSED_CONNECTION);
 			}
@@ -239,13 +177,11 @@ public final class ConnectionPool {
 			// connection.setReadOnly(false);
 			// }
 			if (!givenAwayConQueue.remove(this)) {
-				log.error(ERROR_DELETING_CONNECTION_FROM_THE_GIVEN_AWAY_CONNECTIONS_POOL);
 				throw new SQLDataException(
 						ERROR_DELETING_CONNECTION_FROM_THE_GIVEN_AWAY_CONNECTIONS_POOL);
 			}
 
 			if (!connectionQueue.offer(this)) {
-				log.error(ERROR_DELETING_CONNECTION_FROM_THE_GIVEN_AWAY_CONNECTIONS_POOL);
 				throw new SQLException(ERROR_ALLOCATING_CONNECTION_IN_THE_POOL);
 			}
 

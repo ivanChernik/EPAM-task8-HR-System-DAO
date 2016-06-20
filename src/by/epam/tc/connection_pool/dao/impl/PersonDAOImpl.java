@@ -13,19 +13,25 @@ import by.epam.tc.connection_pool.dao.IPersonDAO;
 import by.epam.tc.connection_pool.dao.connection_pool.ConnectionPool;
 import by.epam.tc.connection_pool.domain.Person;
 import by.epam.tc.connection_pool.exception.ConnectionPoolException;
-import by.epam.tc.connection_pool.exception.PersonDAOException;
+import by.epam.tc.connection_pool.exception.DAOException;
 
 public class PersonDAOImpl implements IPersonDAO {
+	private static final String ERROR_SEARCHING_PERSON_BY_NAME = "Error searching person by name";
+	private static final String FATAL_ERROR_ROLLBACK = "Fatal error rollback";
+	private static final String ERROR_CLOSING_RESULT_SER_OR_STATEMENT_OR_CONNECTION = "Error closing resultSer or statement or connection";
+	private static final String ERORR_CLOSING_STATEMENT = "Erorr closing statement";
+	private static final String ERROR_CLOSING_CONNECTION_OR_STATEMENTS = "Error closing connection or statements";
 	private static final String ERROR_CONNECTION_POOL_INSTANSE = "Error connection pool instanse";
-	// private static final String SQL_ROLE_APPLICANT = "applicant";
 	private static final String ERROR_ROLLBACK = "error rollback";
 	private static final String ERROR_SEARCHING_PERSON_BY_EMAIL = "Error searching person by email";
 	private static final String ERROR_ADDING_PERSON = "ERROR ADDING PERSON";
+	
 	private final static String SQL_ADD_PERSONS_DATA = "INSERT INTO `hr-system`.`person` (`name`, `surname`, `middle_name`, `date_of_birthday`, `email`, `phone`,`id_person`) VALUES (? ,?, ?, ?, ?, ?, ?);";
 	private final static String SQL_ADD_NEW_APPLICANT = "INSERT INTO `hr-system`.`user` (`role`, `login`, `password`) VALUES (? ,?, ?);";
 	private final static String SQL_SEARCH_PERSON_BY_EMAIL = "SELECT `name`, `surname`, `middle_name`, `date_of_birthday`, `email`, `phone` FROM `hr-system`.`person` WHERE `email` = ? ;";
 	private final static String SQL_SEARCH_PERSONS_BY_NAMES = "SELECT `name`, `surname`, `middle_name`, `date_of_birthday`, `email`, `phone` FROM `hr-system`.`person` WHERE `name` = ? AND `surname` = ? AND `middle_name`=?;";
 	private final static String SQL_SEARCH_ID_USER_BY_LOGIN_AND_PASSWORD = "SELECT `id_user` FROM `hr-system`.`user` WHERE `login` = ? AND `password` = ?;";
+	
 	private final static String SQL_NAME = "name";
 	private final static String SQL_SURNAME = "surname";
 	private final static String SQL_MIDDLE_NAME = "middle_name";
@@ -33,22 +39,19 @@ public class PersonDAOImpl implements IPersonDAO {
 	private final static String SQL_EMAIL = "email";
 	private final static String SQL_PHONE = "phone";
 	private final static String SQL_USER_ID = "id_user";
-	private ConnectionPool connectionPool;
 	private static final Logger log = Logger.getLogger(PersonDAOImpl.class);
 
-	public PersonDAOImpl() throws PersonDAOException {
-		try {
-			connectionPool = ConnectionPool.getInstance();
-		} catch (ConnectionPoolException e) {
-			log.error(ERROR_CONNECTION_POOL_INSTANSE, e);
-			throw new PersonDAOException(e);
-		}
-
-	}
 
 	@Override
 	public int registerPerson(String login, String password, String role)
-			throws PersonDAOException, SQLException {
+			throws DAOException {
+		ConnectionPool connectionPool = null;
+		try {
+			connectionPool = ConnectionPool.getInstance();
+		} catch (ConnectionPoolException e) {
+			log.fatal(ERROR_CONNECTION_POOL_INSTANSE, e);
+			throw new DAOException(ERROR_CONNECTION_POOL_INSTANSE,e);
+		}
 		Connection connection = null;
 		PreparedStatement addUserDataPS = null;
 		PreparedStatement searchIDPS = null;
@@ -80,21 +83,33 @@ public class PersonDAOImpl implements IPersonDAO {
 			try {
 				connection.rollback();
 			} catch (SQLException eSQL) {
-				log.error(ERROR_ROLLBACK, eSQL);
-				throw eSQL;
+				log.fatal(ERROR_ROLLBACK, eSQL);
+				throw new DAOException(FATAL_ERROR_ROLLBACK,e);
 			}
-			throw new PersonDAOException(e);
+			throw new DAOException(ERROR_ADDING_PERSON, e);
 
 		} finally {
-			connectionPool.closeConnection(connection, addUserDataPS);
-			connectionPool.closeStatement(searchIDPS);
+			try {
+				addUserDataPS.close();
+				searchIDPS.close();
+				connection.close();
+			} catch (SQLException e) {
+				throw new DAOException(ERROR_CLOSING_CONNECTION_OR_STATEMENTS,e);
+			}
 		}
 		return userID;
 	}
 
 	@Override
 	public boolean addPersonInformation(Person person)
-			throws PersonDAOException {
+			throws DAOException {
+		ConnectionPool connectionPool = null;
+		try {
+			connectionPool = ConnectionPool.getInstance();
+		} catch (ConnectionPoolException e) {
+			log.fatal(ERROR_CONNECTION_POOL_INSTANSE, e);
+			throw new DAOException(ERROR_CONNECTION_POOL_INSTANSE,e);
+		}
 		Connection connection = null;
 		PreparedStatement addPersonalDataPS = null;
 		boolean result = false;
@@ -114,10 +129,15 @@ public class PersonDAOImpl implements IPersonDAO {
 			result = true;
 		} catch (ConnectionPoolException | SQLException e) {
 			log.error(ERROR_ADDING_PERSON, e);
-			throw new PersonDAOException(e);
+			throw new DAOException(ERROR_ADDING_PERSON,e);
 
 		} finally {
-			connectionPool.closeStatement(addPersonalDataPS);
+			try {
+				addPersonalDataPS.close();
+			} catch (SQLException e) {
+				log.error(ERORR_CLOSING_STATEMENT, e);
+				throw new DAOException(ERORR_CLOSING_STATEMENT,e);
+			}
 		}
 		return result;
 	}
@@ -131,7 +151,14 @@ public class PersonDAOImpl implements IPersonDAO {
 	}
 
 	@Override
-	public Person searchPersonByEmail(String email) throws PersonDAOException {
+	public Person searchPersonByEmail(String email) throws DAOException {
+		ConnectionPool connectionPool = null;
+		try {
+			connectionPool = ConnectionPool.getInstance();
+		} catch (ConnectionPoolException e) {
+			log.fatal(ERROR_CONNECTION_POOL_INSTANSE, e);
+			throw new DAOException(ERROR_CONNECTION_POOL_INSTANSE,e);
+		}
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -146,18 +173,23 @@ public class PersonDAOImpl implements IPersonDAO {
 			searchedPerson = getPerson(rs);
 		} catch (ConnectionPoolException | SQLException e) {
 			log.error(ERROR_SEARCHING_PERSON_BY_EMAIL, e);
-			throw new PersonDAOException(e);
+			throw new DAOException(e);
 
 		} finally {
-
-			connectionPool.closeConnection(connection, preparedStatement, rs);
+			try {
+				rs.close();
+				preparedStatement.close();
+				connection.close();
+			} catch (SQLException e) {
+				log.error(ERROR_CLOSING_RESULT_SER_OR_STATEMENT_OR_CONNECTION, e);
+				throw new DAOException(ERROR_CLOSING_RESULT_SER_OR_STATEMENT_OR_CONNECTION,e);
+			}
 		}
 		return searchedPerson;
 	}
 
 	private Person getPerson(ResultSet rs) throws SQLException {
 		Person searchedPerson = new Person();
-		// while (rs.next()) {
 		rs.next();
 		searchedPerson.setName(rs.getString(SQL_NAME));
 		searchedPerson.setSurname(rs.getString(SQL_SURNAME));
@@ -165,13 +197,19 @@ public class PersonDAOImpl implements IPersonDAO {
 		searchedPerson.setDateOfBirthday(rs.getDate(SQL_DATE_OF_BIRTHDAY));
 		searchedPerson.setEmail(rs.getString(SQL_EMAIL));
 		searchedPerson.setPhone(rs.getString(SQL_PHONE));
-		// }
 		return searchedPerson;
 	}
 
 	@Override
 	public List<Person> searchPersonByNames(String name, String surname,
-			String middleName) throws PersonDAOException {
+			String middleName) throws DAOException {
+		ConnectionPool connectionPool = null;
+		try {
+			connectionPool = ConnectionPool.getInstance();
+		} catch (ConnectionPoolException e) {
+			log.fatal(ERROR_CONNECTION_POOL_INSTANSE, e);
+			throw new DAOException(ERROR_CONNECTION_POOL_INSTANSE,e);
+		}
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -186,12 +224,19 @@ public class PersonDAOImpl implements IPersonDAO {
 			rs = preparedStatement.executeQuery();
 			searchedPersonList = getPersonList(rs);
 		} catch (ConnectionPoolException | SQLException e) {
-			log.error("ERROR SEARCHINF +", e);
-			throw new PersonDAOException(e);
+			log.error(ERROR_SEARCHING_PERSON_BY_NAME, e);
+			throw new DAOException(ERROR_SEARCHING_PERSON_BY_NAME,e);
 
 		} finally {
 
-			connectionPool.closeConnection(connection, preparedStatement, rs);
+			try {
+				rs.close();
+				preparedStatement.close();
+				connection.close();
+			} catch (SQLException e) {
+				log.error(ERROR_CLOSING_RESULT_SER_OR_STATEMENT_OR_CONNECTION, e);
+				throw new DAOException(ERROR_CLOSING_RESULT_SER_OR_STATEMENT_OR_CONNECTION,e);
+			}
 		}
 		return searchedPersonList;
 	}

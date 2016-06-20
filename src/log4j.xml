@@ -3,7 +3,7 @@
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
 	<appender name="TXTFileAppender" class="org.apache.log4j.FileAppender">
 		<param name="Encoding" value="UTF-8" />
-		<param name="File" value="src/by/epam/tc/connection_pool/logs/logs.txt" />
+		<param name="File" value="src/logs.txt" />
 		<param name="Append" value="true" />
 		<layout class="org.apache.log4j.SimpleLayout" />
 	</appender>

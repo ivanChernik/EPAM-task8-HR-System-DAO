@@ -1,23 +1,17 @@
-﻿package by.epam.tc.connection_pool.test;
+﻿package by.epam.tc.connection_pool.main;
 
 import java.sql.Date;
-import java.sql.SQLException;
 
 import by.epam.tc.connection_pool.dao.IPersonDAO;
 import by.epam.tc.connection_pool.dao.factory.DAOFactory;
 import by.epam.tc.connection_pool.domain.Person;
-import by.epam.tc.connection_pool.exception.PersonDAOException;
+import by.epam.tc.connection_pool.exception.DAOException;
 
 public class TestDAO {
 
 	public static void main(String[] args) throws Exception {
-		DAOFactory daoFactory = DAOFactory.getInstance();
 		IPersonDAO personDAO = null;
-		try {
-			personDAO = daoFactory.getPersonDAO();
-		} catch (PersonDAOException e) {
-			throw e;
-		}
+		personDAO = DAOFactory.getPersonDAO();
 
 		Date dateSql = Date.valueOf("1981-10-10");
 		Person person = null;
@@ -26,15 +20,15 @@ public class TestDAO {
 
 		try {
 
-//			person.setId(personDAO.registerPerson("olegG", "olegG96",
-//					"applicant"));
-//			
-//			personDAO.addPersonInformation(person);
+			// person.setId(personDAO.registerPerson("olegG", "olegG96",
+			// "applicant"));
+			//
+			// personDAO.addPersonInformation(person);
 
 			Person personEmail = personDAO
 					.searchPersonByEmail("branovecA@gmail.com");
 			System.out.println(personEmail);
-		} catch (PersonDAOException /*| SQLException */e) {
+		} catch (DAOException e) {
 			throw e;
 		}
 	}

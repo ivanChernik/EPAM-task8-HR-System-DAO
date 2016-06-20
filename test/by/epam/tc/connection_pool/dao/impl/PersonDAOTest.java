@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import by.epam.tc.connection_pool.dao.IPersonDAO;
 import by.epam.tc.connection_pool.domain.Person;
-import by.epam.tc.connection_pool.exception.PersonDAOException;
+import by.epam.tc.connection_pool.exception.DAOException;
 
 public class PersonDAOTest {
 	private IPersonDAO personDAO;
@@ -21,11 +21,7 @@ public class PersonDAOTest {
 
 	@Before
 	public void initPersonDAO() {
-		try {
-			personDAO = new PersonDAOImpl();
-		} catch (PersonDAOException e) {
-			e.printStackTrace();
-		}
+		personDAO = new PersonDAOImpl();
 	}
 
 	@After
@@ -39,26 +35,24 @@ public class PersonDAOTest {
 		int idUser = 0;
 		try {
 			idUser = personDAO.registerPerson("remove", "remove", "hr");
-		} catch (PersonDAOException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
-		org.junit.Assert.assertEquals(18, idUser);
+		org.junit.Assert.assertEquals(20, idUser);
 	}
 
-	@Ignore
+	
 	@Test
 	public void addPersonInformation() {
 		boolean resultContion = false;
 		Person newPerson = new Person();
-		newPerson.setId(18);
+		newPerson.setId(20);
 		newPerson.setName("вася");
 		newPerson.setSurname("атрохов");
 		newPerson.setEmail("atrohov@mail.ru");
 		try {
 			resultContion = personDAO.addPersonInformation(newPerson);
-		} catch (PersonDAOException e) {
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 		org.junit.Assert.assertTrue("Add new personal information",
@@ -69,38 +63,39 @@ public class PersonDAOTest {
 	@Test
 	public void searchPersonByEmail() {
 		Date dateSql = Date.valueOf("1996-07-15");
-		Person expectedPerson = new Person("Александр", "Брановец", "Юрьевич", dateSql,
-				"branovecA@gmail.com", "+375291111111");
-		
+		Person expectedPerson = new Person("Александр", "Брановец", "Юрьевич",
+				dateSql, "branovecA@gmail.com", "+375291111111");
+
 		Person personActual = null;
 		try {
-			personActual = personDAO
-					.searchPersonByEmail("branovecA@gmail.com");
-		} catch (PersonDAOException e) {
+			personActual = personDAO.searchPersonByEmail("branovecA@gmail.com");
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 
 		org.junit.Assert.assertEquals(expectedPerson, personActual);
 	}
-	
+
+	@Ignore
 	@Test
 	public void searchPersonByNames() {
 		List<Person> expectedPersonList = new ArrayList<Person>();
 		Date dateSql = Date.valueOf("1996-07-15");
-		Person expectedPerson = new Person("Александр", "Брановец", "Юрьевич", dateSql,
-				"branovecA@gmail.com", "+375291111111");
-		
+		Person expectedPerson = new Person("Александр", "Брановец", "Юрьевич",
+				dateSql, "branovecA@gmail.com", "+375291111111");
+
 		expectedPersonList.add(expectedPerson);
-		
+
 		List<Person> personActualPersonList = null;
 		try {
-			personActualPersonList =  personDAO
-					.searchPersonByNames("Александр", "Брановец", "Юрьевич");
-		} catch (PersonDAOException e) {
+			personActualPersonList = personDAO.searchPersonByNames("Александр",
+					"Брановец", "Юрьевич");
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 
-		org.junit.Assert.assertEquals(expectedPersonList, personActualPersonList);
+		org.junit.Assert.assertEquals(expectedPersonList,
+				personActualPersonList);
 	}
 
 }
