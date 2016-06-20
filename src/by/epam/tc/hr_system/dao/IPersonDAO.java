@@ -1,9 +1,9 @@
-package by.epam.tc.connection_pool.dao;
+package by.epam.tc.hr_system.dao;
 
 import java.util.List;
 
-import by.epam.tc.connection_pool.domain.Person;
-import by.epam.tc.connection_pool.exception.DAOException;
+import by.epam.tc.hr_system.domain.Person;
+import by.epam.tc.hr_system.exception.DAOException;
 
 public interface IPersonDAO {
 

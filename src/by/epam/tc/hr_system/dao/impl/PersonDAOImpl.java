@@ -1,4 +1,4 @@
-package by.epam.tc.connection_pool.dao.impl;
+package by.epam.tc.hr_system.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,11 +9,11 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import by.epam.tc.connection_pool.dao.IPersonDAO;
-import by.epam.tc.connection_pool.dao.connection_pool.ConnectionPool;
-import by.epam.tc.connection_pool.domain.Person;
-import by.epam.tc.connection_pool.exception.ConnectionPoolException;
-import by.epam.tc.connection_pool.exception.DAOException;
+import by.epam.tc.hr_system.dao.IPersonDAO;
+import by.epam.tc.hr_system.dao.connection_pool.ConnectionPool;
+import by.epam.tc.hr_system.domain.Person;
+import by.epam.tc.hr_system.exception.ConnectionPoolException;
+import by.epam.tc.hr_system.exception.DAOException;
 
 public class PersonDAOImpl implements IPersonDAO {
 	private static final String ERROR_SEARCHING_PERSON_BY_NAME = "Error searching person by name";

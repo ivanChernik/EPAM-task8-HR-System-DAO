@@ -1,4 +1,4 @@
-package by.epam.tc.connection_pool.domain;
+package by.epam.tc.hr_system.domain;
 
 import java.io.Serializable;
 import java.sql.Date;

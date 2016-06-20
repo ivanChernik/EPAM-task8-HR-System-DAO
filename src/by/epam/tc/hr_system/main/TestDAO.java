@@ -1,11 +1,11 @@
-﻿package by.epam.tc.connection_pool.main;
+﻿package by.epam.tc.hr_system.main;
 
 import java.sql.Date;
 
-import by.epam.tc.connection_pool.dao.IPersonDAO;
-import by.epam.tc.connection_pool.dao.factory.DAOFactory;
-import by.epam.tc.connection_pool.domain.Person;
-import by.epam.tc.connection_pool.exception.DAOException;
+import by.epam.tc.hr_system.dao.IPersonDAO;
+import by.epam.tc.hr_system.dao.factory.DAOFactory;
+import by.epam.tc.hr_system.domain.Person;
+import by.epam.tc.hr_system.exception.DAOException;
 
 public class TestDAO {
 

@@ -1,4 +1,4 @@
-package by.epam.tc.connection_pool.util;
+package by.epam.tc.hr_system.util;
 
 import java.util.ResourceBundle;
 

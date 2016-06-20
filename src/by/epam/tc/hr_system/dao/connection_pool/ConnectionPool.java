@@ -1,4 +1,4 @@
-package by.epam.tc.connection_pool.dao.connection_pool;
+package by.epam.tc.hr_system.dao.connection_pool;
 
 import java.sql.Array;
 import java.sql.Blob;
@@ -26,9 +26,9 @@ import java.util.concurrent.Executor;
 
 import org.apache.log4j.Logger;
 
-import by.epam.tc.connection_pool.exception.ConnectionPoolException;
-import by.epam.tc.connection_pool.util.DBParameter;
-import by.epam.tc.connection_pool.util.DBResourceManager;
+import by.epam.tc.hr_system.exception.ConnectionPoolException;
+import by.epam.tc.hr_system.util.DBParameter;
+import by.epam.tc.hr_system.util.DBResourceManager;
 
 public final class ConnectionPool {
 	private static final String ERROR_CLOSING_CONNECTION_QUEUES = "Error closing connection queues";

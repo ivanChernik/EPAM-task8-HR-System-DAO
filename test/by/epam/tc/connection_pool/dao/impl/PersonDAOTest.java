@@ -10,9 +10,10 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import by.epam.tc.connection_pool.dao.IPersonDAO;
-import by.epam.tc.connection_pool.domain.Person;
-import by.epam.tc.connection_pool.exception.DAOException;
+import by.epam.tc.hr_system.dao.IPersonDAO;
+import by.epam.tc.hr_system.dao.impl.PersonDAOImpl;
+import by.epam.tc.hr_system.domain.Person;
+import by.epam.tc.hr_system.exception.DAOException;
 
 public class PersonDAOTest {
 	private IPersonDAO personDAO;

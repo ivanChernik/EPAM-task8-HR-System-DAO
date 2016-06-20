@@ -1,4 +1,4 @@
-package by.epam.tc.connection_pool.exception;
+package by.epam.tc.hr_system.exception;
 
 public class ConnectionPoolException extends Exception {
 

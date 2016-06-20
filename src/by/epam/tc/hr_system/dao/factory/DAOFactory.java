@@ -1,8 +1,8 @@
-package by.epam.tc.connection_pool.dao.factory;
+package by.epam.tc.hr_system.dao.factory;
 
-import by.epam.tc.connection_pool.dao.IPersonDAO;
-import by.epam.tc.connection_pool.dao.impl.PersonDAOImpl;
-import by.epam.tc.connection_pool.exception.DAOException;
+import by.epam.tc.hr_system.dao.IPersonDAO;
+import by.epam.tc.hr_system.dao.impl.PersonDAOImpl;
+import by.epam.tc.hr_system.exception.DAOException;
 
 public class DAOFactory {
 	private static DAOFactory instance = new DAOFactory();
