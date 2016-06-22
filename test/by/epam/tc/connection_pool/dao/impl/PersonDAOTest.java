@@ -29,10 +29,41 @@ public class PersonDAOTest {
 	public void destroyPersonDAO() {
 		personDAO = null;
 	}
+	
+	@Ignore
+	@Test
+	public void removePersonByIDTest() {
+		boolean  result = false;
+		try {
+			result = personDAO.removePersonByID(20);
+		} catch (DAOException e) {
+			e.printStackTrace();
+		}
+		org.junit.Assert.assertTrue("Removing user",
+				result);
+	}
+	
+	@Ignore
+	@Test
+	public void updatePersonalDateByIDTest() {
+		boolean  result = false;
+		Person person = new Person();
+		person.setId(10);
+		person.setName("Александр");
+		person.setSurname("Судник");
+		person.setEmail("sudnikS@mail.ru");
+		try {
+			result = personDAO.updatePersonInformation(person);
+		} catch (DAOException e) {
+			e.printStackTrace();
+		}
+		org.junit.Assert.assertTrue("Updating user",
+				result);
+	}
 
 	@Ignore
 	@Test
-	public void registerPerson() {
+	public void registerPersonTest() {
 		int idUser = 0;
 		try {
 			idUser = personDAO.registerPerson("remove", "remove", "hr");
@@ -42,9 +73,9 @@ public class PersonDAOTest {
 		org.junit.Assert.assertEquals(20, idUser);
 	}
 
-	
+	@Ignore
 	@Test
-	public void addPersonInformation() {
+	public void addPersonInformationTest() {
 		boolean resultContion = false;
 		Person newPerson = new Person();
 		newPerson.setId(20);
@@ -62,7 +93,7 @@ public class PersonDAOTest {
 
 	@Ignore
 	@Test
-	public void searchPersonByEmail() {
+	public void searchPersonByEmailTest() {
 		Date dateSql = Date.valueOf("1996-07-15");
 		Person expectedPerson = new Person("Александр", "Брановец", "Юрьевич",
 				dateSql, "branovecA@gmail.com", "+375291111111");
@@ -79,7 +110,7 @@ public class PersonDAOTest {
 
 	@Ignore
 	@Test
-	public void searchPersonByNames() {
+	public void searchPersonByNamesTest() {
 		List<Person> expectedPersonList = new ArrayList<Person>();
 		Date dateSql = Date.valueOf("1996-07-15");
 		Person expectedPerson = new Person("Александр", "Брановец", "Юрьевич",

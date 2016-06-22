@@ -9,8 +9,12 @@ public interface IPersonDAO {
 
 	int registerPerson(String login, String password, String role)
 			throws DAOException;
+	
+	boolean removePersonByID(int idUser) throws DAOException ;
 
 	boolean addPersonInformation(Person person) throws DAOException;
+	
+	boolean updatePersonInformation(Person person) throws DAOException;
 
 	Person searchPersonByEmail(String email) throws DAOException;
 
