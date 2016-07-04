@@ -45,12 +45,14 @@ public class PersonDAOImpl implements IPersonDAO {
 	private final static String SQL_EMAIL = "email";
 	private final static String SQL_PHONE = "phone";
 	private final static String SQL_USER_ID = "id_user";
+	
 	private static final Logger log = Logger.getLogger(PersonDAOImpl.class);
+	ConnectionPool connectionPool;
 
 	@Override
 	public int registerPerson(String login, String password, String role)
 			throws DAOException {
-		ConnectionPool connectionPool = null;
+		
 		try {
 			connectionPool = ConnectionPool.getInstance();
 		} catch (ConnectionPoolException e) {
@@ -108,7 +110,7 @@ public class PersonDAOImpl implements IPersonDAO {
 
 	@Override
 	public boolean removePersonByID(int idUser) throws DAOException {
-		ConnectionPool connectionPool = null;
+		
 		try {
 			connectionPool = ConnectionPool.getInstance();
 		} catch (ConnectionPoolException e) {
@@ -160,7 +162,7 @@ public class PersonDAOImpl implements IPersonDAO {
 
 	@Override
 	public boolean addPersonInformation(Person person) throws DAOException {
-		ConnectionPool connectionPool = null;
+		
 		try {
 			connectionPool = ConnectionPool.getInstance();
 		} catch (ConnectionPoolException e) {
@@ -208,7 +210,7 @@ public class PersonDAOImpl implements IPersonDAO {
 	
 	@Override
 	public boolean updatePersonInformation(Person person) throws DAOException {
-		ConnectionPool connectionPool = null;
+		
 		try {
 			connectionPool = ConnectionPool.getInstance();
 		} catch (ConnectionPoolException e) {
@@ -249,7 +251,7 @@ public class PersonDAOImpl implements IPersonDAO {
 
 	@Override
 	public Person searchPersonByEmail(String email) throws DAOException {
-		ConnectionPool connectionPool = null;
+		
 		try {
 			connectionPool = ConnectionPool.getInstance();
 		} catch (ConnectionPoolException e) {

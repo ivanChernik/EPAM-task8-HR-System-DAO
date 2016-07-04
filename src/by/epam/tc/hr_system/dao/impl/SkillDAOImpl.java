@@ -25,10 +25,11 @@ public class SkillDAOImpl implements ISkillDAO {
 	private static final String SQL_ADD_NEW_SKILL = "INSERT INTO `hr-system`.`skill` (`name`) VALUES ( ?);";
 
 	private static final Logger log = Logger.getLogger(SkillDAOImpl.class);
+	ConnectionPool connectionPool;
 
 	@Override
 	public boolean addNewSkill(String skillName) throws DAOException {
-		ConnectionPool connectionPool = null;
+		
 		try {
 			connectionPool = ConnectionPool.getInstance();
 		} catch (ConnectionPoolException e) {
@@ -66,7 +67,7 @@ public class SkillDAOImpl implements ISkillDAO {
 
 	@Override
 	public boolean removeSkill(String nameSkill) throws DAOException {
-		ConnectionPool connectionPool = null;
+		
 		try {
 			connectionPool = ConnectionPool.getInstance();
 		} catch (ConnectionPoolException e) {
