@@ -47,7 +47,7 @@ public class PersonDAOImpl implements IPersonDAO {
 	private final static String SQL_USER_ID = "id_user";
 	
 	private static final Logger log = Logger.getLogger(PersonDAOImpl.class);
-	ConnectionPool connectionPool;
+	private ConnectionPool connectionPool;
 
 	@Override
 	public int registerPerson(String login, String password, String role)

@@ -25,7 +25,7 @@ public class EducationDAOImpl implements IEducationDAO {
 	private static final String SQL_DELETE_EDUCATION = "DELETE FROM `hr-system`.`education` WHERE `id_education`= ?;";
 	
 	private static final Logger log = Logger.getLogger(EducationDAOImpl.class);
-	ConnectionPool connectionPool;
+	private ConnectionPool connectionPool;
 
 	@Override
 	public boolean addEduction(Education eduction) throws DAOException {

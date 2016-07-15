@@ -25,7 +25,7 @@ public class VacancyDAOImpl implements IVacancyDAO{
 	private static final String SQL_UPDATE_VACANCY = "UPDATE `hr-system`.`vacancy` SET `name`= ?, `description`= ?, `requirement`=?, `company`= ?, `salary`= ?, `date_of_submission`=?, `status`=?, `id_hr`= ? WHERE `id_vacancy`= ?;";
 	
 	private static final Logger log = Logger.getLogger(VacancyDAOImpl.class);
-	ConnectionPool connectionPool;
+	private ConnectionPool connectionPool;
 
 	@Override
 	public boolean addVacancy(Vacancy vacancy, int idHR) throws DAOException {

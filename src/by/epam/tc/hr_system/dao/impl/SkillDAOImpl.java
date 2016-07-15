@@ -25,7 +25,7 @@ public class SkillDAOImpl implements ISkillDAO {
 	private static final String SQL_ADD_NEW_SKILL = "INSERT INTO `hr-system`.`skill` (`name`) VALUES ( ?);";
 
 	private static final Logger log = Logger.getLogger(SkillDAOImpl.class);
-	ConnectionPool connectionPool;
+	private ConnectionPool connectionPool;
 
 	@Override
 	public boolean addNewSkill(String skillName) throws DAOException {
