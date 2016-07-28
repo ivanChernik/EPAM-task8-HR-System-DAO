@@ -43,7 +43,7 @@ public final class ConnectionPool {
 	private int poolSize;
 	private BlockingQueue<Connection> connectionQueue;
 	private BlockingQueue<Connection> givenAwayConQueue;
-	private static ConnectionPool instance = new ConnectionPool();
+	private static ConnectionPool instance;
 
 	private ConnectionPool() {
 		DBResourceManager dbManager = new DBResourceManager();
@@ -60,10 +60,14 @@ public final class ConnectionPool {
 	}
 
 	public static ConnectionPool getInstance() throws ConnectionPoolException {
-		try {
-			instance.initConnectionPool();
-		} catch (ConnectionPoolException e) {
-			throw e;
+
+		if (instance == null) {
+			instance = new ConnectionPool();
+			try {
+				instance.initConnectionPool();
+			} catch (ConnectionPoolException e) {
+				throw e;
+			}
 		}
 		return instance;
 	}
@@ -115,8 +119,8 @@ public final class ConnectionPool {
 			closeConnectionsQueue(givenAwayConQueue);
 			closeConnectionsQueue(connectionQueue);
 		} catch (SQLException e) {
-			throw new ConnectionPoolException(
-					ERROR_CLOSING_CONNECTION_QUEUES, e);
+			throw new ConnectionPoolException(ERROR_CLOSING_CONNECTION_QUEUES,
+					e);
 		}
 	}
 
@@ -130,7 +134,6 @@ public final class ConnectionPool {
 			((PooledConnection) connection).reallyClose();
 		}
 	}
-	
 
 	private class PooledConnection implements Connection {
 		private static final String ERROR_ALLOCATING_CONNECTION_IN_THE_POOL = "Error allocating connection in the pool";
